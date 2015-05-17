@@ -54,5 +54,30 @@
 		
 		return $scores;
 	}
-
+	
+	function _leaderboard_access($op, $args){
+		global $user;
+		$access = FALSE;
+		
+		switch($op) {
+			case 'view':
+				$score = leaderboardresource_get_score($args[0]);
+				$access = user_access('Leaderboard Resources view any score');
+				$access = $access || $score->username == $user->name && user_access('Leaderboard Resources view own score');
+				break;
+			case 'update':
+				$score = leaderboardresource_get_score($args[0]->id);
+				$access = user_access('Leaderboard Resources update any score');
+				$access = $access || $score->username == $user->name && user_access('Leaderboard Resources update own score');
+				break;
+			case 'delete':
+				$score = leaderboardresource_get_score($args[0]);
+				$access = user_access('Leaderboard Resources delete any score');
+				$access = $access || $score->username == $user->name && user_access('Leaderboard Resources delete own score');
+				break;
+		}
+		$access = TRUE;
+		
+		return $access;
+	}
 ?>

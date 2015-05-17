@@ -1,4 +1,7 @@
 name = Leaderboard Resource
 description = Provides information about leaderboard of games in 7Langit games collection
+package = 7Langit
 core = 7.x
-dependencies[] = services
+
+files[] = leaderboardresource.inc
+files[] = leaderboardresource.module

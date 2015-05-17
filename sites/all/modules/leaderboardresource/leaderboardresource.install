@@ -67,7 +67,7 @@
 	 				'description' => t('Username that owned score'),
 	 				'type' => 'varchar',
 	 				'length' => 255,
-	 				'not null' = TRUE,
+	 				'not null' => TRUE,
 	 			),
 	 			'gameid' => array(
 	 				'description' => t('Game ID A-J'),
