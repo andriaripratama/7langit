@@ -1,0 +1,137 @@
+<?php
+
+	// leadearboardresource.module
+	/**
+	 *	Gets a score by username
+	 */
+	 
+	 function leaderboardresource_get_score($id) {
+		  
+          $query = db_select('leaderboard', 'l');
+          $query->condition('l.username', $id, '=');
+          $query->fields('l', array('id', 'username', 'gameid', 'scores', 'created_at'));
+          $item = $query->execute()->fetchAll();
+          
+          return $item;
+          
+	 }
+	 
+	 /**
+	  * Writes a score to DB
+	  */
+	 
+	 function leaderboardresource_write_score($score) {
+		 
+		 $primary_key = !empty($score->id) ? array('id') : NULL;
+		 drupal_write_record('leaderboard', $score, $primary_key); 
+		 
+	 }
+	 
+	 /**
+	  * Delete a score from DB
+	  */
+	 
+	 function leaderboardresource_delete_score($id) {
+		 
+		 $query = db_delete('leaderboard')->condition('id', $id)->execute();
+		 return $query;
+		 
+	 }
+	 
+	 /**
+	  * hook_services_resources()
+	  */
+	 
+	 function leaderboardresource_services_resources() {
+		 
+		 return array(
+		 	'leaderboard' => array(
+		 		'retrieve' => array(
+		 			'help' => 'Retrieves a score',
+		 			'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
+		 			'callback' => '_leaderboardresource_retrieve',
+		 			'access callback' => '_leaderboardresource_access',
+		 			'access arguments' => array('view'),
+		 			'access arguments append' => TRUE,
+		 			'args' => array(
+		             	array(
+					 		'name' => 'id',
+					 		'type' => 'int',
+					 		'description' => 'The id of the score to get',
+					 		'source' => array('path' => '0'),
+					 		'optional' => FALSE,
+					 	),
+					),
+				),
+				'create' => array(
+					'help' => 'Store a score',
+					'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
+					'callback' => '_leaderboardresource_create',
+		 			'access arguments' => array('leaderboard resource create'),
+		 			'access arguments append' => FALSE,
+		 			'args' => array(
+		             	array(
+					 		'name' => 'data',
+					 		'type' => 'struct',
+					 		'description' => 'The score object',
+					 		'source' => 'data',
+					 		'optional' => FALSE,
+					 	),
+					),
+				),
+				'update' => array(
+					'help' => 'Update a score',
+					'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
+					'callback' => '_leaderboardresource_update',
+					'access callback' => '_leaderboardresource_access',
+		 			'access arguments' => array('update'),
+		 			'access arguments append' => TRUE,
+		 			'args' => array(
+		             	array(
+					 		'name' => 'id',
+					 		'type' => 'int',
+					 		'description' => 'The score id to be update',
+					 		'source' => array('path' => 0),
+					 		'optional' => FALSE,
+					 	),
+					 	array(
+					 		'name' => 'data',
+					 		'type' => 'struct',
+					 		'description' => 'The score data object',
+					 		'source' => 'data',
+					 		'optional' => FALSE,
+					 	),
+					),
+				),
+				'index' => array(
+					'help' => 'Retrieves a listing of score',
+					'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
+					'callback' => '_leaderboardresource_index',
+					'access callback' => 'user_access',
+		 			'access arguments' => array('access content'),
+		 			'access arguments append' => FALSE,
+		 			'args' => array(
+		             	array(
+					 		'name' => 'pages',
+					 		'type' => 'int',
+					 		'description' => '',
+					 		'source' => array('param' => 'page'),
+					 		'optional' => TRUE,
+					 		'default value' => 0,
+					 	),
+					 	array(
+					 		'name' => 'parameters',
+					 		'type' => 'array',
+					 		'description' => '',
+					 		'source' => 'param',
+					 		'optional' => TRUE,
+					 		'default value' => 0,
+					 	),
+					),
+				),
+			),
+		 );
+		 
+	 }
+	 
+?>

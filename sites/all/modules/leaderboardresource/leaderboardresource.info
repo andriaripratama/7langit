@@ -1,0 +1,4 @@
+name = Leaderboard Resource
+description = Provides information about leaderboard of games in 7Langit games collection
+core = 7.x
+dependencies[] = services
