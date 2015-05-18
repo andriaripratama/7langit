@@ -87,7 +87,7 @@
 						'help' => 'Store a score',
 						'file' => array('file' => 'inc', 'module' => 'leaderboardresource', 'name' => 'leaderboardresource'),
 						'callback' => '_leaderboardresource_create',
-			 			'access arguments' => array('leaderboard resource create'),
+			 			'access arguments' => array('_leaderboard_access'),
 			 			'access arguments append' => FALSE,
 			 			'args' => array(
 			             	array(

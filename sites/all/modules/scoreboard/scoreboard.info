@@ -1,0 +1,6 @@
+name = Scoreboard
+description = Provide information score games
+package = 7Langit
+core = 7.x
+
+files[] = scoreboard.module

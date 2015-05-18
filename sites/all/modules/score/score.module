@@ -22,6 +22,22 @@
 			 	),
 	          ),
 	        ),
+	        'index' => array(
+				'help' => 'Retrieves a listing of score',
+				'callback' => 'score_index',
+				'access callback' => 'user_access',
+	 			'access arguments' => array('access content'),
+	 			'access arguments append' => FALSE,
+	 			'args' => array(
+	             	array(
+				 		'name' => 'id',
+				 		'type' => 'int',
+				 		'description' => 'The id of the score to get',
+				 		'source' => array('path' => '0'),
+				 		'optional' => FALSE,
+				 	),
+				),
+			),
 	      ),
 	    ),
 	  );

@@ -1,0 +1,161 @@
+<?php
+
+	/*
+	 *	Scoreboard Services Resources
+	 */
+	
+	function scoreboard_services_resources() {
+		
+		$api = array(
+			'scoreboard' => array(
+				'operations' => array(
+					'index' => array(
+						'help' => 'Return val',
+						'callback' => '_scoreboard_index',
+						'access callback' => '_scoreboard_service_access',
+						'args' => array(
+							array(
+								'name' => 'name',
+								'type' => 'string',
+								'description' => 'Return val',
+								'source' => array('path' => '0'),
+								'optional' => TRUE,
+							),
+						),
+					),
+					'create' => array(
+						'help' => 'Input user score to database',
+						'callback' => '_scoreboard_create',
+						'access callback' => '_scoreboard_create_access',
+						'args' => array(
+							array(
+								'name' => 'data',
+								'type' => 'array',
+								'description' => 'Score object',
+								'source' => 'data',
+								'optional' => FALSE,
+							),
+						),	
+					),
+					'retrieve' => array(
+			          	'help' => 'Retrieves score of leaderboard',
+					  	'callback' => 'scoreboard_index',
+					  	'access callback' => 'user_access',
+					  	'access arguments' => array('access content'),
+					  	'access arguments append' => FALSE,
+					  	'args' => array(
+			            	array(
+					 			'name' => 'id',
+					 			'type' => 'int',
+					 			'description' => 'The id of the score to get',
+					 			'source' => array('path' => '0'),
+					 			'optional' => FALSE,
+					 		),
+					 	),
+			        ),
+				),
+			),
+		);
+		
+		return $api;
+		
+	}
+	
+	function _scoreboard_service_access() {
+		return TRUE;
+	}
+	
+	function _scoreboard_create_access() {
+		return TRUE;
+	}
+	
+	function _scoreboard_index() {
+		//return "Scoreboard!";
+		
+		$query = db_select('leaderboard', 'l');
+		$query->fields('l', array('id', 'username', 'gameid', 'scores', 'created_at'));
+		$item = $query->execute()->fetchAll();
+      
+		return $item;
+	}
+	
+	function _scoreboard_create($data) {
+		
+		global $user;
+		
+		if(isset($data) && is_array($data)) $data=(object) $data;
+		
+		unset($data->id);
+		
+		$data->username = $user->name;
+		$data->created_at = time();
+		
+		if(!isset($data->gameid)) {
+			return services_error('Missing leaderboard attribute gameid', 406);
+		}
+		
+		if(!isset($data->scores)) {
+			return services_error('Missing leaderboard attribute scores', 406);
+		}
+		
+		//scoreboard_input($data);
+		//$primary_key = !empty($data->id) ? array('id') : NULL;
+		//drupal_write_record('leaderboard', $data, $primary_key); 
+		
+		db_insert('leaderboard')->fields(array(
+			'username' => $data->username,
+			'created_at' => $data->created_at,
+			'gameid' => $data->gameid,
+			'scores' => $data->scores,
+		))
+		->execute();
+		
+		return (object)array(
+			'id' => $data->id,
+			'uri' => services_resource_uri(array('leaderboard', $data->id)),
+		);
+		
+		//return $data;
+	}
+	
+	function scoreboard_input($data) {
+		
+		global $user;
+		
+		if(isset($data) && is_array($data)) $data=(object) $data;
+		
+		unset($data->id);
+		
+		$data->username = $user->name;
+		$data->created_at = time();
+		
+		if(!isset($data->gameid)) {
+			return services_error('Missing leaderboard attribute gameid', 406);
+		}
+		
+		if(!isset($data->scores)) {
+			return services_error('Missing leaderboard attribute scores', 406);
+		}
+		
+		//scoreboard_input($data);
+		$primary_key = !empty($data->id) ? array('id') : NULL;
+		drupal_write_record('leaderboard', $data, $primary_key); 
+		
+		return (object)array(
+			'id' => $data->id,
+			'uri' => services_resource_uri(array('leaderboard', $data->id)),
+		);
+		
+		
+	}
+	
+	function scoreboard_index() {
+		$query = db_select('leaderboard', 'l');
+		$query->fields('l', array('id', 'username', 'gameid', 'scores', 'created_at'));
+		$item = $query->execute()->fetchAll();
+      
+		return $item;
+	}
+	
+	
+?>
