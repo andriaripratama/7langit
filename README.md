@@ -12,3 +12,5 @@ Progress
 <p>17/5 - Finding error ( Return data only "< result />" )</p>
 <p>18/5 - Create Score Module for grab data from "leaderboard" table.</p>
 <p>18/5 - Score Module can grab data, @ http://104.131.152.44/7langit/api/score/retrieve , ( Data input manually from Database panel ).</p>
+<p>18/5 - Disable Leaderboard Module and Score, write new module call Scoreboard </p>
+<p>18/5 - Scoreboard Module can insert new Score to table (database) and retrieve</p>
