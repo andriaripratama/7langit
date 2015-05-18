@@ -8,8 +8,10 @@
 	function _leaderboardresource_create($data) {
 		global $user;
 		
-		if(isset($data) && is_array($data)) $data=(object) $data;
+		//if(isset($data) && is_array($data)) $data=(object) $data;
+		
 		unset($data->id);
+		
 		$data->username = $user->name;
 		$data->created_at = time();
 		
@@ -25,13 +27,21 @@
 		
 		return (object)array(
 			'id' => $data->id;
-			'result' => 'Success',
+			'uri' => services_resource_uri(array('leaderboard', $data->id)),
 		);
 	}
 	
+	/**
+     * retrieve 
+     */
+     
 	function _leaderboardresource_retrieve($id) {
 		return leaderboardresource_get_score($id);
 	}
+	
+	/**
+     * delete 
+     */
 	
 	function _leaderboardresource_delete($id) {
 		leaderboardresource_delete_score($id);
@@ -42,6 +52,29 @@
 		);
 	}
 	
+	/**
+     * update 
+     */
+     
+	function _leaderboardresource_update($id, $data) {
+      global $user;
+      $score = leaderboardresource_get_score($id);
+
+      unset($data->created);
+      $data->id = $id;
+      $data->username = $score->name;
+
+      leaderboardresource_write_note($data);
+      return (object)array(
+        'id' => $id,
+        'uri' => services_resource_uri(array('leaderboard', $id)),
+      );
+    }
+    
+    /**
+     * index 
+     */
+    
 	function _leaderboardresource_index($pages, $parameters) {
 		global $user;
 		

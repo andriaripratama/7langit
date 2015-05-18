@@ -1,6 +1,25 @@
 <?php
 
 	// leadearboardresource.module
+	
+	/**
+	 *	Implements hook_perm()
+	 */
+	 
+	function leaderboardresource_permission() {
+	  // Bangkok, City of Angels, Travel & Leisure Best City 2011
+	  // Thaksin and Reds, runaway crimal & convict, ruler of Mordor.
+	  return array(
+		'leaderboardresource create'=> array('title' => t('leaderboardresource score'),'description' => t('create'),),
+		'leaderboardresource view any scores'=> array('title' => t('leaderboardresource view any score'),'description' => t('view any score'),),
+		'leaderboardresource view own scores'=> array('title' => t('leaderboardresource view own scores'),'description' => t('view own scores'),),
+		'leaderboardresource edit any scores'=> array('title' => t('leaderboardresource edit any score'),'description' => t('edit any score'),),
+		'leaderboardresource edit own scores'=> array('title' => t('leaderboardresource edit own scores'),'description' => t('edit own scores'),),
+		'leaderboardresource delete any scores'=> array('title' => t('leaderboardresource delete any score'),'description' => t('delete any score'),),
+		'leaderboardresource delete own scores'=> array('title' => t('leaderboardresource delete own scores'),'description' => t('delete own scores'),),
+	  );
+	}
+	
 	/**
 	 *	Gets a score by username
 	 */
@@ -46,87 +65,105 @@
 		 
 		 return array(
 		 	'leaderboard' => array(
-		 		'retrieve' => array(
-		 			'help' => 'Retrieves a score',
-		 			'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
-		 			'callback' => '_leaderboardresource_retrieve',
-		 			'access callback' => '_leaderboardresource_access',
-		 			'access arguments' => array('view'),
-		 			'access arguments append' => TRUE,
-		 			'args' => array(
-		             	array(
-					 		'name' => 'id',
-					 		'type' => 'int',
-					 		'description' => 'The id of the score to get',
-					 		'source' => array('path' => '0'),
-					 		'optional' => FALSE,
-					 	),
+		 		'operations' => array(
+			 		'retrieve' => array(
+			 			'help' => 'Retrieves a score',
+			 			'file' => array('file' => 'inc', 'module' => 'leaderboardresource', 'name' => 'leaderboardresource'),
+			 			'callback' => '_leaderboardresource_retrieve',
+			 			'access callback' => '_leaderboard_access',
+			 			'access arguments' => array('view'),
+			 			'access arguments append' => FALSE,
+			 			'args' => array(
+			             	array(
+						 		'name' => 'id',
+						 		'type' => 'int',
+						 		'description' => 'The id of the score to get',
+						 		'source' => array('path' => '0'),
+						 		'optional' => FALSE,
+						 	),
+						),
 					),
-				),
-				'create' => array(
-					'help' => 'Store a score',
-					'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
-					'callback' => '_leaderboardresource_create',
-		 			'access arguments' => array('leaderboard resource create'),
-		 			'access arguments append' => FALSE,
-		 			'args' => array(
-		             	array(
-					 		'name' => 'data',
-					 		'type' => 'struct',
-					 		'description' => 'The score object',
-					 		'source' => 'data',
-					 		'optional' => FALSE,
-					 	),
+					'create' => array(
+						'help' => 'Store a score',
+						'file' => array('file' => 'inc', 'module' => 'leaderboardresource', 'name' => 'leaderboardresource'),
+						'callback' => '_leaderboardresource_create',
+			 			'access arguments' => array('leaderboard resource create'),
+			 			'access arguments append' => FALSE,
+			 			'args' => array(
+			             	array(
+						 		'name' => 'data',
+						 		'type' => 'struct',
+						 		'description' => 'The score object',
+						 		'source' => 'data',
+						 		'optional' => FALSE,
+						 	),
+						),
 					),
-				),
-				'update' => array(
-					'help' => 'Update a score',
-					'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
-					'callback' => '_leaderboardresource_update',
-					'access callback' => '_leaderboardresource_access',
-		 			'access arguments' => array('update'),
-		 			'access arguments append' => TRUE,
-		 			'args' => array(
-		             	array(
-					 		'name' => 'id',
-					 		'type' => 'int',
-					 		'description' => 'The score id to be update',
-					 		'source' => array('path' => 0),
-					 		'optional' => FALSE,
-					 	),
-					 	array(
-					 		'name' => 'data',
-					 		'type' => 'struct',
-					 		'description' => 'The score data object',
-					 		'source' => 'data',
-					 		'optional' => FALSE,
-					 	),
+					'update' => array(
+						'help' => 'Update a score',
+						'file' => array('file' => 'inc', 'module' => 'leaderboardresource', 'name' => 'leaderboardresource'),
+						'callback' => '_leaderboardresource_update',
+						'access callback' => '_leaderboardresource_access',
+			 			'access arguments' => array('update'),
+			 			'access arguments append' => TRUE,
+			 			'args' => array(
+			             	array(
+						 		'name' => 'id',
+						 		'type' => 'int',
+						 		'description' => 'The score id to be update',
+						 		'source' => array('path' => 0),
+						 		'optional' => FALSE,
+						 	),
+						 	array(
+						 		'name' => 'data',
+						 		'type' => 'struct',
+						 		'description' => 'The score data object',
+						 		'source' => 'data',
+						 		'optional' => FALSE,
+						 	),
+						),
 					),
-				),
-				'index' => array(
-					'help' => 'Retrieves a listing of score',
-					'file' => array('file' => 'inc', 'module' => 'leaderboardresource'),
-					'callback' => '_leaderboardresource_index',
-					'access callback' => 'user_access',
-		 			'access arguments' => array('access content'),
-		 			'access arguments append' => FALSE,
-		 			'args' => array(
-		             	array(
-					 		'name' => 'pages',
-					 		'type' => 'int',
-					 		'description' => '',
-					 		'source' => array('param' => 'page'),
-					 		'optional' => TRUE,
-					 		'default value' => 0,
-					 	),
-					 	array(
-					 		'name' => 'parameters',
-					 		'type' => 'array',
-					 		'description' => '',
-					 		'source' => 'param',
-					 		'optional' => TRUE,
-					 		'default value' => 0,
-					 	),
+					'delete' => array(
+						'help' => 'Delete a score',
+						'file' => array('file' => 'inc', 'module' => 'leaderboardresource', 'name' => 'leaderboardresource'),
+						'callback' => '_leaderboardresource_delete',
+			 			'access arguments' => array('delete'),
+			 			'access arguments append' => TRUE,
+			 			'args' => array(
+			             	array(
+						 		'name' => 'id',
+						 		'type' => 'int',
+						 		'description' => 'The id score to delete',
+						 		'source' => array('path' => '0'),
+						 		'optional' => FALSE,
+						 	),
+						),
+					),
+					'index' => array(
+						'help' => 'Retrieves a listing of score',
+						'file' => array('file' => 'inc', 'module' => 'leaderboardresource', 'name' => 'leaderboardresource'),
+						'callback' => '_leaderboardresource_index',
+						'access callback' => 'user_access',
+			 			'access arguments' => array('access content'),
+			 			'access arguments append' => FALSE,
+			 			'args' => array(
+			             	array(
+						 		'name' => 'pages',
+						 		'type' => 'int',
+						 		'description' => '',
+						 		'source' => array('param' => 'page',),
+						 		'optional' => TRUE,
+						 		'default value' => 0,
+						 	),
+						 	array(
+						 		'name' => 'parameters',
+						 		'type' => 'array',
+						 		'description' => '',
+						 		'source' => 'param',
+						 		'optional' => TRUE,
+						 		'default value' => array(),
+						 	),
+						),
 					),
 				),
 			),

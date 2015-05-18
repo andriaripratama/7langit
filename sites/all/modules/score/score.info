@@ -1,0 +1,6 @@
+name = Score Testing
+description = Testing for Score in leaderboard
+package = 7Langit
+core = 7.x
+
+files[] = score.module
