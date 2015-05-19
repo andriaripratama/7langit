@@ -14,3 +14,6 @@ Progress
 <p>18/5 - Score Module can grab data, @ http://104.131.152.44/7langit/api/score/retrieve , ( Data input manually from Database panel ).</p>
 <p>18/5 - Disable Leaderboard Module and Score, write new module call Scoreboard </p>
 <p>18/5 - Scoreboard Module can insert new Score to table (database) and retrieve ( @ http://104.131.152.44/7langit/api/scoreboard .json / .xml )</p>
+<p>19/5 - Create Text Up Module for Uploading TXT file</p>
+<p>19/5 - Issue on Text Up Module, file can't move to 'public://' directory. error on implementation file_save_upload function.</p>
+<p>19/5 - Testing using file_save function, work and save to 'public://' directory and 'file_managed' table, but the data/content must be provide as String, not data/contetn from the file.</p>
