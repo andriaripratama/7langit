@@ -50,30 +50,47 @@
 		$item = $query->execute()->fetchAll();
       
 		return $item;
+		
+		$formated = array();
+		
+		/*
+foreach($item as $i) {
+			$formated['uri'] = file_create_url($i[0]["uri"]);
+		}
+		
+		return $formated;
+*/
 	}
 
 	function _textup_upload($data) {
+		
+		
 		$name = $_FILES['file']['name'];
 		$type = $_FILES['file']['type'];
 		$size = $_FILES['file']['size'];
+		$allowed = array('txt');
+		$ext = pathinfo($name, PATHINFO_EXTENSION);
 		
-		$item["name"] = $name;
-		$item["type"] = $type;
-		$item["size"] = $size;
-		
-		$validators = array('file_validate_extensions' => array());
-		
-		ob_start();
-		readfile($_FILES['file']['tmp_name']);
-		$data = ob_get_clean();
-		
-		
-		if(file_save_data($data, 'public://text/'.$name)) {
-			return true;
+		if(in_array($ext, $allowed)) {
+			$item["name"] = $name;
+			$item["type"] = $type;
+			$item["size"] = $size;
+			
+			$validators = array('file_validate_extensions' => array());
+			
+			ob_start();
+			readfile($_FILES['file']['tmp_name']);
+			$data = ob_get_clean();
+			
+			
+			if(file_save_data($data, 'public://text/'.$name)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return false;
+			return 'File not supported';
 		}
-		
 		
 		// FAILED METHOD
 		
