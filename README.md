@@ -17,3 +17,4 @@ Progress
 <p>19/5 - Create Text Up Module for Uploading TXT file</p>
 <p>19/5 - Issue on Text Up Module, file can't move to 'public://' directory. error on implementation file_save_upload function.</p>
 <p>19/5 - Testing using file_save_data function, work and save to 'public://' directory and 'file_managed' table, but the data/content must be provide as String, not data/contetn from the file.</p>
+<p>19/5 - Text up Module finally work! Text file save to 'public://text' folder and file detail save to 'file_managed' table.</p>
