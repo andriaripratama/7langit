@@ -1,0 +1,6 @@
+name = Text Up
+description = API for Text Upload
+package = 7Langit
+core = 7.x
+
+files[] = textup.module

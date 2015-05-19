@@ -1,0 +1,6 @@
+name = Andridevel
+description = Experiment Development and Testing Codes goes here
+package = Andri's
+core = 7.x
+
+files[] = andridevel.module

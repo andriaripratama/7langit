@@ -1,0 +1,74 @@
+<?php
+
+	function textup_services_resources() {
+		
+		$api = array(
+			'textup' => array(
+				'operations' => array(
+					'index' => array(
+						'help' => 'List all uploaded text',
+						'callback' => '_textup_index',
+						'access callback' => '_textup_service_access',
+						'args' => array(
+							array(
+								'name' => 'name',
+								'type' => 'string',
+								'description' => 'List all uploaded text',
+								'source' => array('path' => '0'),
+								'optional' => TRUE,
+							),
+						),
+					),
+					'create' => array(
+						'help' => 'Upload text files',
+						'callback' => '_textup_upload',
+						'access callback' => '_textup_service_access',
+						'args' => array(
+							array(
+								'name' => 'data',
+								'type' => 'array',
+								'description' => 'Upload text files',
+								'source' => 'data',
+								'optional' => FALSE,
+							),
+						),
+					),
+				),
+			),
+		);
+		
+		return $api;
+	}
+
+	function _textup_service_access() {
+		return TRUE;
+	}
+
+	function _textup_index() {
+		//return file_create_url('public://test.txt');
+		return __DIR__;
+	}
+
+	function _textup_upload($data) {
+		$name = $_FILES['file']['name'];
+		$type = $_FILES['file']['type'];
+		$size = $_FILES['file']['size'];
+		
+		$item["name"] = $name;
+		$item["type"] = $type;
+		$item["size"] = $size;
+		/*
+		$validators = array('file_validate_extensions' => array());
+		$file = file_save_upload($_FILES['file'], $validators, 'public://file', FILE_EXISTS_RENAME);
+		
+		if(file_save_upload('file', $validators, 'public://text/'.$name)) {
+			return TRUE;
+		}
+		*/
+		
+		if(file_save($name)) {
+			return TRUE;
+		}
+	}
+
+?>

@@ -1,0 +1,94 @@
+<?php
+
+	/*
+	 *	Scoreboard Services Resources
+	 */
+	
+	function andridevel_services_resources() {
+		
+		$api = array(
+			'andridevel' => array(
+				'operations' => array(
+					'index' => array(
+						'help' => 'Index of Andridevel',
+						'callback' => '_andridevel_index',
+						'access callback' => '_andridevel_service_access',
+						'args' => array(
+							array(
+								'name' => 'name',
+								'type' => 'string',
+								'description' => 'Return anything',
+								'source' => array('path' => '0'),
+								'optional' => TRUE,
+							),
+						),
+					),
+					'publicPath' => array(
+						'help' => 'Return public path on Drupal',
+						'callback' => '_andridevel_publicPath',
+						'access callback' => '_andridevel_service_access',
+						'args' => array(
+							array(
+								'name' => 'name',
+								'type' => 'string',
+								'description' => 'Return anything',
+								'source' => array('path' => '0'),
+								'optional' => TRUE,
+							),
+						),
+					),
+					'create' => array(
+						'help' => 'Upload file',
+						'callback' => '_andridevel_upload',
+						'access callback' => '_andridevel_service_access',
+						'args' => array(
+							array(
+								'name' => 'data',
+								'type' => 'array',
+								'description' => 'File object',
+								'source' => 'data',
+								'optional' => FALSE,
+							),
+						),	
+					),
+				),
+			),
+		);
+		
+		return $api;
+		
+	}
+	
+	function _andridevel_service_access() {
+		return TRUE;
+	}
+	
+	function _andridevel_index() {
+		$uri = 'public://file';
+		if ($wrapper = file_stream_wrapper_get_instance_by_uri($uri)) {
+			$path = $wrapper->realpath();
+		}
+		
+		return $path;
+		
+	}
+	
+	function _andridevel_publicPath() {
+		$uri = 'public://';
+		if ($wrapper = file_stream_wrapper_get_instance_by_uri($uri)) {
+			$path = $wrapper->realpath();
+		}
+		
+		return $path;
+		
+	}
+	
+	function _andridevel_upload($data) {
+		$name = $_FILES['file']['name'];
+		
+		return $_FILES['file'];
+	}
+	
+	
+	
+?>

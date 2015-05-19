@@ -61,6 +61,16 @@
 		
 	}
 	
+	function _scoreboard_last_id() {
+		$query = db_select('leaderboard', 'l');
+		$query->fields('l', array('id'));
+		$query->orderBy('id', 'DESC');
+		$query->range(0, 1);
+		$item = $query->execute()->fetchAll();
+		
+		return $item;
+	}
+	
 	function _scoreboard_service_access() {
 		return TRUE;
 	}
@@ -77,6 +87,7 @@
 		$item = $query->execute()->fetchAll();
       
 		return $item;
+		
 	}
 	
 	function _scoreboard_create($data) {
@@ -113,40 +124,10 @@
 		return (object)array(
 			'id' => $data->id,
 			'uri' => services_resource_uri(array('leaderboard', $data->id)),
+			'code' => 1,
 		);
 		
 		//return $data;
-	}
-	
-	function scoreboard_input($data) {
-		
-		global $user;
-		
-		if(isset($data) && is_array($data)) $data=(object) $data;
-		
-		unset($data->id);
-		
-		$data->username = $user->name;
-		$data->created_at = time();
-		
-		if(!isset($data->gameid)) {
-			return services_error('Missing leaderboard attribute gameid', 406);
-		}
-		
-		if(!isset($data->scores)) {
-			return services_error('Missing leaderboard attribute scores', 406);
-		}
-		
-		//scoreboard_input($data);
-		$primary_key = !empty($data->id) ? array('id') : NULL;
-		drupal_write_record('leaderboard', $data, $primary_key); 
-		
-		return (object)array(
-			'id' => $data->id,
-			'uri' => services_resource_uri(array('leaderboard', $data->id)),
-		);
-		
-		
 	}
 	
 	function scoreboard_index() {
