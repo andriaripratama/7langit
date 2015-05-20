@@ -23,5 +23,17 @@ API Endpoint
 ============
 
 <h4>Login, Register, Forget Password</h4>
+<ul>
+	<li>- Login - POST - http://104.131.152.44/7langit/api/u/login</li>
+	<li>- Register - POST - http://104.131.152.44/7langit/api/u/register</li>
+</ul>
 <h4>Scoreboard</h4>
+<ul>
+	<li>- Scoreboard (list all score) - GET - http://104.131.152.44/7langit/api/scoreboard</li>
+	<li>- Scoreboard (create new score) - POST - http://104.131.152.44/7langit/api/scoreboard</li>
+</ul>
 <h4>File Upload</h4>
+<ul>
+	<li>- File Text Upload (list all uploaded text) - GET - http://104.131.152.44/7langit/api/textup</li>
+	<li>- File Text Upload (upload new text file) - POST - http://104.131.152.44/7langit/api/textup</li>
+</ul>
