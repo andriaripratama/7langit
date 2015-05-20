@@ -1,0 +1,46 @@
+<?php
+	
+	
+	function textupfe_menu() {
+	  $items['textup'] = array(
+	    'title' => 'Text Files',
+	    'page callback' => 'textupfe_showlist',
+	    'page arguments' => array(2), // The matched wildcard.
+	    'access callback' => TRUE,
+	    'type' => MENU_CALLBACK,
+	    );
+	  return $items;
+	}
+	
+	
+	/**
+	 * Page callback.
+	 */
+	function textupfe_showlist($event = NULL) {
+	  $query = db_select('file_managed', 'fm');
+	  $query->fields('fm');
+	  $item = $query->execute()->fetchAll();
+	
+	
+	  $output = 'List <br/>';
+	  foreach($item as $row) {
+	    $output .= $row->filename."<br/>";
+	  }
+	
+	
+	  return theme('textupfe',array('results' => $item));
+	}
+	
+	
+	function textupfe_theme() {
+	  return array(
+	    'textupfe' => array(
+	      'template' => 'textupfe',
+	      'variables' => array(
+	        'results' => NULL,
+	      ),
+	     ),
+	  );
+	}
+
+?>
