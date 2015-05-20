@@ -26,6 +26,7 @@ API Endpoint
 <ul>
 	<li>- Login - POST - http://104.131.152.44/7langit/api/u/login</li>
 	<li>- Register - POST - http://104.131.152.44/7langit/api/u/register</li>
+	<li>- Forget Password - POST - http://104.131.152.44/7langit/api/u/request_new_password</li>
 </ul>
 <h4>Scoreboard</h4>
 <ul>
