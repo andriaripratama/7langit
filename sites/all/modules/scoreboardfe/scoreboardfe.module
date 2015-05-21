@@ -1,0 +1,50 @@
+<?php
+	
+	
+	function scoreboardfe_menu() {
+	  $items['scoreboard'] = array(
+	    'title' => 'Scoreboard',
+	    'page callback' => 'scoreboardfe_showlist',
+	    'access callback' => TRUE,
+	    'type' => MENU_CALLBACK,
+	  );
+	  
+	  return $items;
+	}
+	
+	function scoreboardfe_showlist() {
+	  
+	  if(user_is_anonymous() == TRUE) {
+		  return FALSE;
+	  }
+	
+	  $result = db_query("SELECT username, gameid, scores, created_at FROM (SELECT username, gameid, scores, created_at, @game_rank := IF(@current_game = gameid, @game_rank + 1,1) AS game_rank, @current_game := gameid FROM leaderboard ORDER BY gameid, scores DESC) scoreboard");
+		
+		$item = $result->fetchAll();
+		
+		foreach($item as $i) {
+			$arr[] = array(
+				'gameid' => $i->gameid,
+				'user' => $i->username,
+				'scores' => $i->scores,
+				'create' => date("d-m-Y H:i:s", $i->created_at),
+			);
+		}
+		
+	
+	  return theme('scoreboardfe',array('results' => $item));
+	}
+	
+	
+	function scoreboardfe_theme() {
+		return array(
+			'scoreboardfe' => array(
+				'template' => 'scoreboardfe',
+				'variables' => array(
+				'results' => NULL,
+				),
+			),
+		);
+	}
+
+?>

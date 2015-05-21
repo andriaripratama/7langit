@@ -1,0 +1,49 @@
+<?php
+
+	 
+	 /**
+	  * Impletementation hook_schema()
+	  */
+	 
+	 function scoreboard_schema() {
+		 $schema['leaderboard'] = array(
+		 	'description' => 'Stores scoreboard data',
+	 		'fields' => array(
+	 			'id' => array(
+	 				'description' => 'Primary identifier for a leaderboard',
+	 				'type' => 'serial',
+	 				'unsigned' => TRUE,
+	 				'not null' => TRUE,
+	 			),
+	 			'username' => array(
+	 				'description' => t('Username that owned score'),
+	 				'type' => 'varchar',
+	 				'length' => 255,
+	 				'not null' => TRUE,
+	 			),
+	 			'gameid' => array(
+	 				'description' => t('Game ID A-J'),
+	 				'type' => 'varchar',
+	 				'length' => 2,
+	 				'not null' => TRUE,
+	 			),
+	 			'scores' => array(
+	 				'description' => t('Scores'),
+	 				'type' => 'int',
+	 				'length' => 4,
+	 				'not null' => TRUE,
+	 			),
+	 			'created_at' => array(
+	 				'description' => t('Timestamp'),
+	 				'type' => 'int',
+	 				'unsigned' => TRUE,
+	 				'not null' => TRUE,
+	 				'default' => 0,
+	 			)
+	 		),
+	 		'primary key' => array('id'),
+		 );
+		 return $schema;
+	 }
+
+?>

@@ -65,10 +65,11 @@
 	
 	function _andridevel_index() {
 		
-		$user = user_load(16);
+		$result = db_query("SELECT username, gameid, scores FROM (SELECT username, gameid, scores, @game_rank := IF(@current_game = gameid, @game_rank + 1,1) AS game_rank, @current_game := gameid FROM leaderboard ORDER BY gameid, scores DESC) scoreboard");
 		
-		return $user->name;
+		$item = $result->fetchAll();
 		
+		return $item;
 	}
 	
 	function _andridevel_publicPath() {

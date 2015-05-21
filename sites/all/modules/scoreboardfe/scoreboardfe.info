@@ -1,0 +1,6 @@
+name = Scoreboard Front End
+description = Custom Page for Score / Leaderboard list of the game.
+package = 7Langit
+core = 7.x
+
+files[] = scoreboardfe.module

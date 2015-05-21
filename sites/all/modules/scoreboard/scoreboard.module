@@ -84,13 +84,21 @@
 	}
 	
 	function _scoreboard_index() {
-		//return "Scoreboard!";
 		
-		$query = db_select('leaderboard', 'l');
-		$query->fields('l', array('id', 'username', 'gameid', 'scores', 'created_at'));
-		$item = $query->execute()->fetchAll();
-      
-		return $item;
+		$result = db_query("SELECT username, gameid, scores, created_at FROM (SELECT username, gameid, scores, created_at, @game_rank := IF(@current_game = gameid, @game_rank + 1,1) AS game_rank, @current_game := gameid FROM leaderboard ORDER BY gameid, scores DESC) scoreboard");
+		
+		$item = $result->fetchAll();
+		
+		foreach($item as $i) {
+			$arr[] = array(
+				'gameid' => $i->gameid,
+				'user' => $i->username,
+				'scores' => $i->scores,
+				'create' => date("d-m-Y H:i:s", $i->created_at),
+			);
+		}
+		
+		return $arr;
 		
 	}
 	

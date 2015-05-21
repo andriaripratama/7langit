@@ -1,5 +1,5 @@
 name = Text Up Front End
-description = Custom Template for File Upload List
+description = Custom Page for File Upload List
 package = 7Langit
 core = 7.x
 
