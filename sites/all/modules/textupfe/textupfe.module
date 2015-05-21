@@ -8,15 +8,25 @@
 	    'page arguments' => array(2), // The matched wildcard.
 	    'access callback' => TRUE,
 	    'type' => MENU_CALLBACK,
-	    );
+	  );
+	  
+	  $items['textup/upload'] = array(
+	    'title' => 'Text Files',
+	    'page callback' => 'textupfe_upload',
+	    'page arguments' => array(2), // The matched wildcard.
+	    'access callback' => TRUE,
+	    'type' => MENU_CALLBACK,
+	  );
+	  
 	  return $items;
 	}
 	
-	
-	/**
-	 * Page callback.
-	 */
 	function textupfe_showlist($event = NULL) {
+	  
+	  if(user_is_anonymous() == TRUE) {
+		  return FALSE;
+	  }
+	
 	  $query = db_select('file_managed', 'fm');
 	  $query->fields('fm');
 	  $item = $query->execute()->fetchAll();
@@ -31,16 +41,26 @@
 	  return theme('textupfe',array('results' => $item));
 	}
 	
+	function textupfe_upload() {
+		return theme('textupfe_upload');
+	}
+	
 	
 	function textupfe_theme() {
-	  return array(
-	    'textupfe' => array(
-	      'template' => 'textupfe',
-	      'variables' => array(
-	        'results' => NULL,
-	      ),
-	     ),
-	  );
+		return array(
+			'textupfe' => array(
+				'template' => 'textupfe',
+				'variables' => array(
+				'results' => NULL,
+				),
+			),
+			'textupfe_upload' => array(
+				'template' => 'textupfe_upload',
+				'variables' => array(
+				'results' => NULL,
+				),
+			),
+		);
 	}
 
 ?>

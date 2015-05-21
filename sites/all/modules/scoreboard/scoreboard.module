@@ -40,7 +40,7 @@
 					'retrieve' => array(
 			          	'help' => 'Retrieves score of leaderboard',
 					  	'callback' => 'scoreboard_index',
-					  	'access callback' => 'user_access',
+					  	'access callback' => '_scoreboard_service_access',
 					  	'access arguments' => array('access content'),
 					  	'access arguments append' => FALSE,
 					  	'args' => array(
@@ -72,7 +72,11 @@
 	}
 	
 	function _scoreboard_service_access() {
-		return TRUE;
+		if(user_is_logged_in() == FALSE) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
 	}
 	
 	function _scoreboard_create_access() {
@@ -102,11 +106,11 @@
 		$data->created_at = time();
 		
 		if(!isset($data->gameid)) {
-			return services_error('Missing leaderboard attribute gameid', 406);
+			return services_error('Missing leaderboard attribute "gameid" ', 406);
 		}
 		
 		if(!isset($data->scores)) {
-			return services_error('Missing leaderboard attribute scores', 406);
+			return services_error('Missing leaderboard attribute "scores" ', 406);
 		}
 		
 		//scoreboard_input($data);
@@ -122,8 +126,10 @@
 		->execute();
 		
 		return (object)array(
-			'id' => $data->id,
-			'uri' => services_resource_uri(array('leaderboard', $data->id)),
+			//'id' => $data->id,
+			//'uri' => services_resource_uri(array('leaderboard', $data->id)),
+			'user' => $data->username,
+			'score' => $data->scores,
 			'code' => 1,
 		);
 		

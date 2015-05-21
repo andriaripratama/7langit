@@ -41,7 +41,11 @@
 	}
 
 	function _textup_service_access() {
-		return TRUE;
+		if(user_is_anonymous() == TRUE) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
 	}
 
 	function _textup_index() {

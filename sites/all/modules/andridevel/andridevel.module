@@ -64,12 +64,10 @@
 	}
 	
 	function _andridevel_index() {
-		$uri = 'public://file';
-		if ($wrapper = file_stream_wrapper_get_instance_by_uri($uri)) {
-			$path = $wrapper->realpath();
-		}
 		
-		return $path;
+		$user = user_load(16);
+		
+		return $user->name;
 		
 	}
 	
