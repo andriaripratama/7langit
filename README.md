@@ -26,6 +26,7 @@ Progress
 <p>20/5 - Add "Text Up Front end" Module, list all files that already uploaded. @ ( http://104.131.152.44/7langit/textup )</p>
 <p>21/5 - Add Security to Module, only auth user can see and access module</p>
 <p>21/5 - Add "Scoreboard Front end" Module, list all Top 10 Games score. @ ( http://104.131.152.44/7langit/scoreboard )</p>
+<p>22/5 - Add "Glogin" Module. Custom Page for Login, Register and Forget Password. @ ( http://104.131.152.44/7langit/game/login - /game/signup - /game/forget-password )</p>
 
 API Endpoint
 ============
@@ -53,4 +54,10 @@ Custom Page
 <ul>
 	<li>- list all uploaded file - http://104.131.152.44/7langit/textup</li>
 	<li>- list Top 10 Games score - http://104.131.152.44/7langit/scoreboard</li>
+</ul>
+<h4>Custom Login, Register and Forget Password Page</h4>
+<ul>
+	<li>- Login - http://104.131.152.44/7langit/game/login</li>
+	<li>- Register - http://104.131.152.44/7langit/game/signup</li>
+	<li>- Forget Password - http://104.131.152.44/7langit/game/forget-password</li>
 </ul>
