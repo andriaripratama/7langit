@@ -40,6 +40,9 @@
 			case 'glogin_mail_register':
 				$message['subject'] = $params['subject'];
 				$message['body'][] = $params['body'];
+			case 'glogin_mail_fpass':
+				$message['subject'] = $params['subject'];
+				$message['body'][] = $params['body'];
 			break;
 		}
 	}
@@ -167,6 +170,29 @@
 	}
 	
 	function glogin_fpass_form_submit($form_fpass, &$form_state) {
+		
+		if(filter_var($form_state['values']['email'], FILTER_VALIDATE_EMAIL)) {
+			$user = user_load_by_mail($form_state['values']['email']);
+			$uid = $user->uid;
+			$timestamp = $user->login;
+			
+			$to = $form_state['values']['email'];
+			$from = 'andriaripratama@gmail.com';
+			
+			$subject = 'Reset Password @ 7Langit';
+			//$body = 'Your account has been activated!';
+			
+			$params = array(
+				'subject' => $subject,
+				'body' => 'Click the link for reset the password : '.user_pass_reset_url($user),
+			);
+			
+			drupal_mail('glogin', 'glogin_mail_register', $to, language_default(), $params);
+			
+			drupal_set_message(t('An email has been sent!'));
+		} else {
+			drupal_set_message(t('Only E-mail allowed!'));
+		}
 		
 	}
 
