@@ -100,6 +100,31 @@
 		return $form_signup;
 	}
 	
+	function glogin_signup_form_submit($form_signup, &$form_state) {
+		$field = array(
+			'name' => $form_state['values']['name'],
+			'mail' => $form_state['values']['email'],
+			'pass' => $form_state['values']['pass'],
+			'status' => 1,
+			'init' => $form_state['values']['email'],
+			'roles' => array(
+		    	DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+		    ),
+		);
+		
+		$new_user = user_save('', $field);
+		
+		if($new_user) {
+			drupal_set_message(t('Registration Success!'));	
+			drupal_mail('user', 'status_activated', $form_state['values']['email'], NULL, array('account' => $new_user), variable_get('site_mail', 'andriaripratama@gmail.com'));
+		} else {
+			drupal_set_message(t('Registration Failed!'));	
+		}
+		
+		
+			
+	}
+	
 	function glogin_fpass_form($form_fpass, &$form_state) {
 		
 		$form_fpass['email'] = array(
@@ -115,6 +140,10 @@
 		);
 		
 		return $form_fpass;
+	}
+	
+	function glogin_fpass_form_submit($form_fpass, &$form_state) {
+		
 	}
 
 ?>
