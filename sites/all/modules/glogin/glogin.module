@@ -32,76 +32,89 @@
 	  return $items;
 	}
 	
-	function glogin_login_form($form, &$form_state) {
+	function glogin_login_form($form_login, &$form_state) {
 		
-		$form['username'] = array(
+		$form_login['username'] = array(
 			'#type' => 'textfield',
 			'#title' => t('Username'),
 			'#size' => 10,
 			'#required' => TRUE,
 		);
 		
-		$form['password'] = array(
+		$form_login['password'] = array(
 			'#type' => 'password',
 			'#title' => t('Password'),
 			'#size' => 10,
 			'#required' => TRUE,
 		);
 		
-		$form['submit_button'] = array(
+		$form_login['submit_button'] = array(
 			'#type' => 'submit',
 			'#value' => t('Login'),
 		);
 		
-		return $form;
+		return $form_login;
 	}
 	
-	function glogin_signup_form($form, &$form_state) {
+	function glogin_login_form_submit($form_login, &$form_state) {
+		$username = $form_state['values']['username'];
+		$password = $form_state['values']['password'];
 		
-		$form['name'] = array(
+		if(user_authenticate($username, $password)) {
+			drupal_set_message(t('Auth Success! User : '. $username .' & Pass : '. $password));	
+		} else {
+			drupal_set_message(t('Auth Failed! User or Password wrong'));	
+		}
+		
+		
+	}
+	
+	function glogin_signup_form($form_signup, &$form_state) {
+		
+		$form_signup['name'] = array(
 			'#type' => 'textfield',
 			'#title' => t('Name'),
 			'#size' => 20,
 			'#required' => TRUE,
 		);
 		
-		$form['pass'] = array(
+		$form_signup['pass'] = array(
 			'#type' => 'password',
 			'#title' => t('Password'),
 			'#size' => 20,
 			'#required' => TRUE,
 		);
 		
-		$form['email'] = array(
+		$form_signup['email'] = array(
 			'#type' => 'textfield',
 			'#title' => t('E-mail'),
 			'#size' => 20,
 			'#required' => TRUE,
 		);
 		
-		$form['submit_button'] = array(
+		$form_signup['submit_button'] = array(
 			'#type' => 'submit',
 			'#value' => t('Sign Up'),
 		);
 		
-		return $form;
+		return $form_signup;
 	}
 	
-	function glogin_fpass_form($form, &$form_state) {
+	function glogin_fpass_form($form_fpass, &$form_state) {
 		
-		$form['email'] = array(
+		$form_fpass['email'] = array(
 			'#type' => 'textfield',
 			'#title' => t('E-mail'),
 			'#size' => 20,
 			'#required' => TRUE,
 		);
 		
-		$form['submit_button'] = array(
+		$form_fpass['submit_button'] = array(
 			'#type' => 'submit',
 			'#value' => t('Submit'),
 		);
 		
-		return $form;
+		return $form_fpass;
 	}
 
 ?>
