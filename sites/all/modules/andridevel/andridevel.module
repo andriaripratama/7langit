@@ -3,6 +3,9 @@
 	/*
 	 *	Scoreboard Services Resources
 	 */
+	chdir("/var/www/7langit");
+	require_once './includes/password.inc';
+	//drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 	
 	function andridevel_services_resources() {
 		
@@ -65,11 +68,9 @@
 	
 	function _andridevel_index() {
 		
-		$result = db_query("SELECT username, gameid, scores FROM (SELECT username, gameid, scores, @game_rank := IF(@current_game = gameid, @game_rank + 1,1) AS game_rank, @current_game := gameid FROM leaderboard ORDER BY gameid, scores DESC) scoreboard");
+		$pass = 'andri7langit';
 		
-		$item = $result->fetchAll();
-		
-		return $item;
+		return user_hash_password($pass);
 	}
 	
 	function _andridevel_publicPath() {

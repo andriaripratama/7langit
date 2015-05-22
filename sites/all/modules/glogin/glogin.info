@@ -1,0 +1,6 @@
+name = Game Login
+description = Custom Page for Login
+package = 7Langit
+core = 7.x
+
+files[] = glogin.module

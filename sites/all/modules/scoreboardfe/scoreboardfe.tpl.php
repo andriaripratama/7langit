@@ -15,7 +15,7 @@
 				
 				if($gameid != $r->gameid) {
 					echo '<tr>';
-						echo '<td colspan="3"><h3>'.$r->gameid.'</h3></td>';
+						echo '<td colspan="3"><h3>Game '.$r->gameid.'</h3></td>';
 					echo '</tr>';	
 				} 
 				

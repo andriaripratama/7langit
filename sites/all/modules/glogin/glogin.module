@@ -1,0 +1,107 @@
+<?php
+	
+	
+	function glogin_menu() {
+	  $items['game/login'] = array(
+	    'title' => 'Login',
+	    'description' => 'Custom Login Form',
+	    'page callback' => 'drupal_get_form',
+	    'page arguments' => array('glogin_login_form'), // The matched wildcard.
+	    'access callback' => TRUE,
+	    'type' => MENU_CALLBACK,
+	  );
+	  
+	  $items['game/signup'] = array(
+	    'title' => 'Sign Up',
+	    'description' => 'Custom Register Form',
+	    'page callback' => 'drupal_get_form',
+	    'page arguments' => array('glogin_signup_form'), // The matched wildcard.
+	    'access callback' => TRUE,
+	    'type' => MENU_CALLBACK,
+	  );
+	  
+	  $items['game/forget-password'] = array(
+	    'title' => 'Forget Password',
+	    'description' => 'Custom Forget Password Form',
+	    'page callback' => 'drupal_get_form',
+	    'page arguments' => array('glogin_fpass_form'), // The matched wildcard.
+	    'access callback' => TRUE,
+	    'type' => MENU_CALLBACK,
+	  );
+	  
+	  return $items;
+	}
+	
+	function glogin_login_form($form, &$form_state) {
+		
+		$form['username'] = array(
+			'#type' => 'textfield',
+			'#title' => t('Username'),
+			'#size' => 10,
+			'#required' => TRUE,
+		);
+		
+		$form['password'] = array(
+			'#type' => 'password',
+			'#title' => t('Password'),
+			'#size' => 10,
+			'#required' => TRUE,
+		);
+		
+		$form['submit_button'] = array(
+			'#type' => 'submit',
+			'#value' => t('Login'),
+		);
+		
+		return $form;
+	}
+	
+	function glogin_signup_form($form, &$form_state) {
+		
+		$form['name'] = array(
+			'#type' => 'textfield',
+			'#title' => t('Name'),
+			'#size' => 20,
+			'#required' => TRUE,
+		);
+		
+		$form['pass'] = array(
+			'#type' => 'password',
+			'#title' => t('Password'),
+			'#size' => 20,
+			'#required' => TRUE,
+		);
+		
+		$form['email'] = array(
+			'#type' => 'textfield',
+			'#title' => t('E-mail'),
+			'#size' => 20,
+			'#required' => TRUE,
+		);
+		
+		$form['submit_button'] = array(
+			'#type' => 'submit',
+			'#value' => t('Sign Up'),
+		);
+		
+		return $form;
+	}
+	
+	function glogin_fpass_form($form, &$form_state) {
+		
+		$form['email'] = array(
+			'#type' => 'textfield',
+			'#title' => t('E-mail'),
+			'#size' => 20,
+			'#required' => TRUE,
+		);
+		
+		$form['submit_button'] = array(
+			'#type' => 'submit',
+			'#value' => t('Submit'),
+		);
+		
+		return $form;
+	}
+
+?>
