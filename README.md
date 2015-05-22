@@ -27,6 +27,9 @@ Progress
 <p>21/5 - Add Security to Module, only auth user can see and access module</p>
 <p>21/5 - Add "Scoreboard Front end" Module, list all Top 10 Games score. @ ( http://104.131.152.44/7langit/scoreboard )</p>
 <p>22/5 - Add "Glogin" Module. Custom Page for Login, Register and Forget Password. @ ( http://104.131.152.44/7langit/game/login - /game/signup - /game/forget-password )</p>
+<p>22/5 - Fixing Login in Glogin Module.</p>
+<p>22/5 - Fixing Mail Function for Register in Glogin Module.</p>
+<p>22/5 - Update Forget Password in Glogin Module.</p>
 
 API Endpoint
 ============
